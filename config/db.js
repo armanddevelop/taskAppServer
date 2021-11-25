@@ -7,12 +7,13 @@ const options = {
 };
 const connectDatabase = async () => {
   try {
-    //mogoose recive the varibale of environment and the second paremter is a object of confoguration
+    //mogoose recive the variable of environment and the second parameter in the function
+    //is a object of configuration
     await mongoose.connect(process.env.DB_MONGO, options);
     console.log("The connection was succesfull");
   } catch (error) {
-    console.error("This si the error in connectDase: ", error);
-    process.exit(1); //detener la app
+    console.error("This is the error in connectDase: ", error);
+    process.exit(1); //stop the app
   }
 };
 
