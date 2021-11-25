@@ -6,13 +6,14 @@ const app = express();
 //connect to dataBase
 connectDatabase();
 
+//enable express.json
+app.use(express.json({ extended: true }));
+
 //port app
 const PORT = process.env.PORT || 4000;
 
-//
-app.get("/", (req, res) => {
-  res.send("hola licha");
-});
+//import routes
+app.use("/api/users", require("./routes/users"));
 
 //run the server
 app.listen(PORT, () => {
