@@ -13,7 +13,7 @@ router.post(
     check("password", "The password must be minimun 6 characteres").isLength({
       min: 6,
     }),
-    check("email", "REgister a valid email").isEmail(),
+    check("email", "Register a valid email").isEmail(),
   ],
   userController.createUser
 );

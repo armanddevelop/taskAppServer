@@ -1,10 +1,10 @@
 const User = require("../models/Users");
 const bcryptjs = require("bcryptjs");
-const validationCreateUser = require("../validations/validations");
+const utilsValidation = require("../utils/validations");
 
 exports.createUser = async (req, res) => {
   //check if there are errors
-  const errors = validationCreateUser.validationCreateUser(req);
+  const errors = utilsValidation.userDataValidation(req);
   const { password, email } = req.body;
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -19,8 +19,13 @@ exports.createUser = async (req, res) => {
       user.password = await bcryptjs.hash(password, salt);
       //save the user
       await user.save();
-      //menssage to confirmation
-      res.status(200).json({ msg: "User created" });
+      //create and sing JWT
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+      utilsValidation.JWTValidation(payload, res);
     } else {
       return res.status(400).json({ msg: "The user is already created" });
     }
