@@ -20,13 +20,7 @@ exports.createUser = async (req, res) => {
       user.password = await bcryptjs.hash(password, salt);
       //save the user
       await user.save();
-      //create and sing JWT
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
-      tokenGeneration.JWTGeneration(payload, res);
+      tokenGeneration.JWTGeneration(user, res);
     } else {
       return res.status(400).json({ msg: "The user is already created" });
     }

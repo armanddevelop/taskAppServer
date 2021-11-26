@@ -1,8 +1,13 @@
 const jsonWebToken = require("jsonwebtoken");
 
-exports.JWTGeneration = (payload, resp) => {
+exports.JWTGeneration = (user, resp) => {
   const expirationTime = {
     expiresIn: 3600, //1 hour
+  };
+  const payload = {
+    user: {
+      id: user.id,
+    },
   };
   //sing JWT
   jsonWebToken.sign(
