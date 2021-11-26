@@ -1,6 +1,7 @@
 const User = require("../models/Users");
 const bcryptjs = require("bcryptjs");
 const utilsValidation = require("../utils/validations");
+const tokenGeneration = require("../utils/tokenGenerator");
 
 exports.createUser = async (req, res) => {
   //check if there are errors
@@ -25,7 +26,7 @@ exports.createUser = async (req, res) => {
           id: user.id,
         },
       };
-      utilsValidation.JWTValidation(payload, res);
+      tokenGeneration.JWTGeneration(payload, res);
     } else {
       return res.status(400).json({ msg: "The user is already created" });
     }
