@@ -4,6 +4,7 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const { check } = require("express-validator");
 
+//authenticate users
 //api/auth
 router.post(
   "/",
