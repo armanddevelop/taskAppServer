@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ProjectSchema = mongoose.Schema({
-  name: {
+  nameProject: {
     type: String,
     required: true,
     trim: true,
@@ -12,7 +12,7 @@ const ProjectSchema = mongoose.Schema({
     ref: "User",
     trim: true,
   },
-  regiterDate: {
+  registerDate: {
     type: Date,
     default: Date.now(),
   },
