@@ -1,33 +1,47 @@
-const Project = require("../models/Project");
 const utilsValidation = require("../utils/validations");
+const utilsQuery = require("./Querys/utils");
+
 exports.createProject = async (req, res) => {
   const errors = utilsValidation.userDataValidation(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
-    //create a new project
-    const project = new Project(req.body);
-    //save the creator of the project via JWT
-    project.owner = req.user.id;
-    await project.save();
-    res.status(200).json(project);
+    utilsQuery.createDocument(req, res);
   } catch (error) {
     console.log("Shit happend in createProject ", error);
     res.status(500).send("Shit happens in createProject :(");
   }
 };
 //get the projects of a current user
-
 exports.getProjects = async (req, res) => {
   try {
-    const { id } = req.user;
-    const projects = await Project.find({ owner: id }).sort({
-      registerDate: -1,
-    });
-    res.json({ projects });
+    utilsQuery.getDocuments(req, res);
   } catch (error) {
     console.log("Some shit happend to get the projects ", error);
-    res.status(500).send({ mesg: "Some shit happend to get the projects" });
+    res.status(500).send({ msg: "Some shit happend to get the projects" });
+  }
+};
+//get project by ID
+exports.getProjectById = async (req, res) => {
+  try {
+    utilsQuery.getDocumentById(req, res);
+  } catch (error) {
+    console.log("Shit happen in getProjectById ", error);
+    res.status(500).send({ msg: "Something get wrong the project ID" });
+  }
+};
+//update a project
+exports.updateProject = async (req, res) => {
+  const errors = utilsValidation.userDataValidation(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    const id = req.params.id;
+    utilsQuery.updateDocument(id, req, res);
+  } catch (error) {
+    console.log("Shit happend in put project ", error);
+    res.status(500).send({ msg: "Some shit happend to update the project" });
   }
 };
