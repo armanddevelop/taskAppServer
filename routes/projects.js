@@ -9,7 +9,7 @@ const { check } = require("express-validator");
 router.post(
   "/",
   [
-    check("nameProject", "The name of the projetc is mandatory")
+    check("nameProject", "The name of the project is mandatory")
       .not()
       .isEmpty(),
   ],
@@ -19,5 +19,20 @@ router.post(
 //get the projects
 //api/projects
 router.get("/", auth, projectController.getProjects);
+//get the project by id
+//api/projects
+router.get("/:id", auth, projectController.getProjectById);
+//update the projects
+//api/projects
+router.put(
+  "/:id",
+  [
+    check("nameProject", "The name of the project is mandatory")
+      .not()
+      .isEmpty(),
+  ],
+  auth,
+  projectController.updateProject
+);
 
 module.exports = router;
